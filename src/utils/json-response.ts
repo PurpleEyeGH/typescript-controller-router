@@ -1,7 +1,7 @@
 import { ValidationError } from 'class-validator';
 import { Response } from 'express';
 
-export class JsonResponses {
+class JsonResponse {
 
     static sendTrue(message: string, res: Response) {
         res.json({
@@ -10,10 +10,12 @@ export class JsonResponses {
         })
     }
 
-    static sendFalse(message: string, res: Response) {
-        res.json({
+    static sendFalse(status: number, message: string, res: Response) {
+        res.status(status).json({
             message: message,
             success: false
         })
     }
 }
+
+export default JsonResponse;

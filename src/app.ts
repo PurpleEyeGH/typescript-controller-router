@@ -1,7 +1,8 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
+import compression from 'compression';
+import cors from "cors";
 import 'dotenv/config';
 import { Server } from 'http';
-import cors from "cors";
 import ControllerInterface from './interfaces/controller.interface';
 
 class App {
@@ -28,8 +29,11 @@ class App {
  
   private initializeMiddlewares() {
     this._app.use(express.json());
+    this._app.use(express.urlencoded( {
+      extended: false
+    }));
+    this._app.use(compression());
     this._app.use(cors());
-    //this._app.use
   }
  
   private initializeControllers(controllers: ControllerInterface[]) {
@@ -37,7 +41,7 @@ class App {
       this._app.use('/api', controller.router);
     });
   }
- 
+
   public listen() {
     this._server = this._app.listen(this._port, () => {
       console.log(`App listening on the port ${this._port}`);

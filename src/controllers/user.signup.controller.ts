@@ -6,7 +6,7 @@ import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
 class UserSignupController implements ControllerInterface {
-  public path = '/signup';
+  public path = '/user';
   public router = Router();
  
   constructor() {
@@ -14,7 +14,7 @@ class UserSignupController implements ControllerInterface {
   }
  
   public intializeRoutes() {
-    this.router.post(this.path, this.createUser);
+    this.router.post(this.path + '/signup', this.createUser);
   }
  
   private createUser = (request: Request, response: Response) => {
@@ -29,7 +29,7 @@ class UserSignupController implements ControllerInterface {
         const createdUser: DocumentMongoose = new userModel(userData);
         createdUser.save()
         .then(savedUser => {
-          console.log(savedUser);
+          console.log(savedUser.toJSON);
           response.json({
             message: 'OK'
         });
