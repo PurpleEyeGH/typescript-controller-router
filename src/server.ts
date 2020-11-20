@@ -9,6 +9,7 @@ validateEnv();
 const app = new App(
   [
     new UserSignupController(),
+    new MemeController()
   ]
 );
 ConnectionMongoose.connectToTheDatabase();
